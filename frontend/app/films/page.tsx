@@ -19,10 +19,7 @@ export default function FilmsList() {
   const [films, setFilms] = useState([]);
 
   async function getFilmsData() {
-    const filmsResponse = await fetcher(
-      `${process.env.NEXT_PUBLIC_STRAPI_URL}/films`
-    );
-    //const filmsResponseJson = await JSON.stringify(filmsResponse.data);
+    const filmsResponse = await fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/films`);
 
     setFilms(filmsResponse.data);
     setIsLoading(false);
@@ -34,22 +31,15 @@ export default function FilmsList() {
       <>
         <h1 className="text-xl text-gray-700 ">Films</h1>
 
-        {true &&
-          films.map((film: Film) => (<div>
+        {!isLoading &&
+          films.map((film: Film) => (
+          <div>
             {film.attributes.title}
             {film.attributes.description}
-          </div>) )}
+          </div>
+          ))
+        }
       </>
     </div>
   );
 }
-
-/*export async function getFilmsData() {
-  const filmsResponse = await fetcher(`${process.env.NEXT_PUBLIC_STRAPI_URL}/films`);
-  const filmsResponseJson = JSON.stringify(filmsResponse.data);
-
-  console.log(filmsResponseJson);
-  return filmsResponse;
-}
-
-getFilmsData();*/
